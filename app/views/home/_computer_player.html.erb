@@ -5,7 +5,7 @@
       <span class="player-name"><%= @game.players[hand.id] %></span>
     </div>
     <div class="large-10 columns">
-      <ul class="large-block-grid-5 cards">
+      <ul class="hand_of_cards">
         <% if reveal_cards %>
 
             <% hand.cards.each do |card| %>

@@ -1,7 +1,6 @@
 <div class="hand <%= @game.players[hand.id] %>">
   <div class="row">
     <div class="large-2 columns text-center">
-      <div class="avatar" style="background: #fff url(/assets/<%=  @game.players[hand.id].downcase.tr(" " , "-") %>.jpg) no-repeat top center; background-size: auto 100%;"></div>
       <span class="player-name"><%= @game.players[hand.id] %></span>
     </div>
     <div class="large-10 columns">

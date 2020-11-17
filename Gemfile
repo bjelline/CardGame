@@ -1,24 +1,28 @@
 source 'https://rubygems.org'
 
 # gem 'rails', '3.2.13'
-gem 'rails', '4.2.8'
+gem 'rails', '5.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3', '~> 1.3.6'
 gem 'foundation-rails'
+gem 'sqlite3', '~> 1.3.6'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
+  gem 'sass-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier'
+end
+
+group :development do
+  gem 'listen', '~> 3.3'
 end
 
 gem 'jquery-rails'
@@ -38,4 +42,5 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-gem "foundation", "~> 1.0"
+gem 'activerecord-session_store'
+gem 'foundation', '~> 1.0'

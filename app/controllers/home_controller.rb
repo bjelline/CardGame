@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
   def index
     player_pool = ['Brigitte J.', 'Thomas M.', 'Hilmar L.', 'Simon G.', 'Michael D.']

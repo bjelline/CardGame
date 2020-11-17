@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Hand
   attr_accessor :cards, :id, :pairs
 
@@ -7,7 +9,8 @@ class Hand
   end
 
   def draw(card)
-    raise "Hand is full" if hand_is_full?
+    raise 'Hand is full' if hand_is_full?
+
     @cards << card
     if hand_is_full?
       sort_cards!
@@ -28,25 +31,27 @@ class Hand
   end
 
   def highest_pair_value
-    @pairs.keys.map {|k| Card.all_values[k]}.max
+    @pairs.keys.map { |k| Card.all_values[k] }.max
   end
 
   def rank
     return :empty_or_partial_hand unless hand_is_full?
+
     @rank
   end
 
   def to_s
-    @cards.each { |card| card.to_s }
+    @cards.each(&:to_s)
   end
 
   private
+
   def card_suits
-    @cards.map { |card| card.suit }
+    @cards.map(&:suit)
   end
 
   def card_values
-    @cards.map { |card| card.value }
+    @cards.map(&:value)
   end
 
   def get_rank
@@ -69,6 +74,7 @@ class Hand
     return :two_pair if has_two_pair?
     # Any two cards of the same rank. Our example shows the best possible one-pair hand.
     return :one_pair if has_pair?
+
     # Any hand not in the above-mentioned hands. Our example shows the best possible high-card hand.
     :high_card
   end
@@ -79,9 +85,9 @@ class Hand
 
   def find_pairs
     @pairs = Hash.new(0)
-    #gets the pairs and counts the number "of a kind"
+    # gets the pairs and counts the number "of a kind"
     @cards.each { |c| @pairs[c.value] += 1 }
-    @pairs.select! {|k,v| v > 1}
+    @pairs.select! { |_k, v| v > 1 }
   end
 
   def is_flush?
@@ -94,7 +100,7 @@ class Hand
 
   def is_sucker_straight?
     if @cards.last.value == :ace && @cards.first.value == :two && consecutive_card_count == 3
-      @cards.unshift(@cards.pop) #move the Ace to the front of the hand
+      @cards.unshift(@cards.pop) # move the Ace to the front of the hand
       return true
     end
     false
@@ -111,12 +117,12 @@ class Hand
   end
 
   def has_all_royal_values?
-    royal_values = [:ten, :jack, :queen, :king, :ace].to_set
+    royal_values = %i[ten jack queen king ace].to_set
     card_values.all? { |x| royal_values.include?(x) }
   end
 
   def n_of_a_kind?(number)
-    @pairs.any? { |k, count| count > number - 1 }
+    @pairs.any? { |_k, count| count > number - 1 }
   end
 
   def has_pair?

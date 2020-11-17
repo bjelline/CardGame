@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class GameScorerTest < ActiveSupport::TestCase
-  test "Can find winning hand" do
+  test 'Can find winning hand' do
     royal_flush = Hand.new
     royal_flush.draw Card.new(:ten, :spade)
     royal_flush.draw Card.new(:jack, :spade)
@@ -37,8 +39,7 @@ class GameScorerTest < ActiveSupport::TestCase
     assert scorer_b.winning_hand == royal_flush
   end
 
-  test "Can find winning hand when two hands are a pair" do
-
+  test 'Can find winning hand when two hands are a pair' do
     pair1 = Hand.new
     pair1.draw Card.new(:six, :spade)
     pair1.draw Card.new(:seven, :club)
@@ -60,8 +61,8 @@ class GameScorerTest < ActiveSupport::TestCase
     assert scorer_b.winning_hand == pair1, "Incorrect hand chosen: #{scorer_a.winning_hand.rank} - #{scorer_a.winning_hand.high_card}"
   end
 
-#Poker rules: If a winning hand cannot be determined by it's rank, then the winner is chosen by high card
-  test "Can find winning hand by high card" do
+  # Poker rules: If a winning hand cannot be determined by it's rank, then the winner is chosen by high card
+  test 'Can find winning hand by high card' do
     ace_high = Hand.new
     ace_high.draw Card.new(:two, :spade)
     ace_high.draw Card.new(:jack, :spade)
@@ -93,11 +94,11 @@ class GameScorerTest < ActiveSupport::TestCase
     scorer_a = GameScorer.new([ace_high, king_high, ten_high, jack_high])
     scorer_b = GameScorer.new([king_high, ace_high, ten_high, jack_high])
 
-    assert scorer_a.winning_hand == ace_high, "Incorrect winner chosen"
-    assert scorer_b.winning_hand == ace_high, "Incorrect winner chosen"
+    assert scorer_a.winning_hand == ace_high, 'Incorrect winner chosen'
+    assert scorer_b.winning_hand == ace_high, 'Incorrect winner chosen'
   end
 
-  test "Straight should beat a sucker straight" do
+  test 'Straight should beat a sucker straight' do
     sucker_straight = Hand.new
     sucker_straight.draw Card.new(:five, :spade)
     sucker_straight.draw Card.new(:three, :heart)
@@ -113,14 +114,14 @@ class GameScorerTest < ActiveSupport::TestCase
     straight.draw Card.new(:six, :spade)
 
     scorer_a = GameScorer.new([sucker_straight, straight])
-    scorer_b = GameScorer.new([straight,sucker_straight])
+    scorer_b = GameScorer.new([straight, sucker_straight])
 
-    assert scorer_a.winning_hand == straight, "Incorrect winner chosen"
-    assert scorer_b.winning_hand == straight, "Incorrect winner chosen"
+    assert scorer_a.winning_hand == straight, 'Incorrect winner chosen'
+    assert scorer_b.winning_hand == straight, 'Incorrect winner chosen'
     assert sucker_straight.high_card.value == :five, "Incorrect high card: #{sucker_straight.high_card}"
   end
 
-  test "Can score a game" do
+  test 'Can score a game' do
     game = Game.new
     game.start
     scorer = GameScorer.new(game)

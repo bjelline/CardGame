@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class Deck
   attr_reader :cards
-  def initialize()
+
+  def initialize
     build_deck
     shuffle
   end
@@ -10,7 +13,8 @@ class Deck
   end
 
   def deal
-    raise "Deck is empty" if deck_is_empty?
+    raise 'Deck is empty' if deck_is_empty?
+
     @cards.pop
   end
 
@@ -19,14 +23,15 @@ class Deck
   end
 
   def deck_is_empty?
-    @cards.length == 0
+    @cards.length.zero?
   end
 
   private
+
   def build_deck
     @cards = []
-    Card.all_values.keys.each do |value|
-      Card.all_suits.each {|suit| @cards << Card.new(value,suit)}
+    Card.all_values.each_key do |value|
+      Card.all_suits.each { |suit| @cards << Card.new(value, suit) }
     end
   end
 end
